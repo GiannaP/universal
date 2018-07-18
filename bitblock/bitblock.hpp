@@ -320,12 +320,11 @@ namespace sw {
       if (a.test(0)) {
         copy_into<operand_size, result_size>(b, 0, result);
       }
-      for (int i = 1; i < operand_size; i++) {
+      for (size_t i = 1; i < operand_size; i++) {
         if (a.test(i)) {
           copy_into<operand_size, result_size>(b, i, addend);
-          bool carry = result.add(addend);
-          // we should never have a carry
-          assert(carry == false);
+          (void) result.add(addend);
+          // we should never have a carry:  assert(carry == false);
         }
       }
     }

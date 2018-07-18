@@ -127,7 +127,8 @@ public:
 		_raw_bits.set(nbits - 1, _sign);
 	}
 	/// Construct posit from raw bits
-	posit(const std::bitset<nbits>& raw_bits) {
+  //	posit(const std::bitset<nbits>& raw_bits) {
+  posit(const bitblock<nbits>& raw_bits) {
 		*this = set(raw_bits);
 	}
 	// initializers for native types
@@ -771,7 +772,8 @@ public:
 		// check special cases
 		_sign = raw_bits.test(nbits - 1);
 		if (_sign) {
-			std::bitset<nbits> tmp(raw_bits);
+                  //			std::bitset<nbits> tmp(raw_bits);
+                  bitblock<nbits> tmp(raw_bits);
 			tmp.reset(nbits - 1);
 			if (tmp.none()) {
 				setToNaR();  // special case = NaR (Not a Real)
@@ -818,7 +820,7 @@ public:
 			std::istringstream ss(bitStr);
 			ss >> std::hex >> raw;
 			//std::cout << "[" << nbitsStr << "] [" << esStr << "] [" << bitStr << "] = " << raw << std::endl;
-			set_raw_bits(raw);
+			set_raw_bits(raw);  // TODO: this takes the least significant bits, but we want to take the most significant bits
 			bSuccess = true;
 		}
 		else {
